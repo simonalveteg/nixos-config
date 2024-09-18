@@ -8,6 +8,8 @@
     inputs.nvchad4nix.homeManagerModule
   ];
 
+  programs.bash.enable = true;
+
   programs.nvchad = {
     enable = true;
     extraConfig = 
@@ -32,8 +34,6 @@
       })
       '';
   };
-
-  programs.bash.enable = true;
 
   programs.git = {
     enable = true;

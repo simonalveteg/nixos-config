@@ -24,7 +24,7 @@
         modules = [
           ./hosts/WSL/configuration.nix
           inputs.home-manager.nixosModules.default
-	  nixos-wsl.nixosModules.wsl
+	        nixos-wsl.nixosModules.wsl
         ];
       };
     };

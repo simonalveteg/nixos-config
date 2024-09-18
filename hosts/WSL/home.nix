@@ -14,6 +14,24 @@
     enable = true;
   };
 
+  programs.bash.enable = true;
+
+  programs.git = {
+    enable = true;
+    extraConfig = {
+      user = {
+        email = "simon.alveteg@gmail.com";
+        name = "simonalveteg";
+      };
+      init = {defaultBranch = "main";};
+    };
+    aliases = {
+      cam = "commit -a -m";
+      clo = "config --list --show-origin";
+      l = "log --oneline -n10";
+    };
+  };
+
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.

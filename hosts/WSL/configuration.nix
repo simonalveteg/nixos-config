@@ -23,7 +23,7 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     users = {
-      "skarv" = import ./home.nix; # holds config for skarv, in user dir
+      "skarv" = import ./home.nix;
     };
   };
   

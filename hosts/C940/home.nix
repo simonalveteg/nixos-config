@@ -6,9 +6,11 @@
 
   imports = [
     inputs.nvchad4nix.homeManagerModule
+    ../../modules/waybar/default.nix
   ];
 
   programs.bash.enable = true;
+
 
   wayland.windowManager.hyprland = {
   enable = true;
@@ -22,7 +24,7 @@
 
     exec-once = [
      "waybar" 
-     "dunst"
+     "mako"
      "rofi-wayland"
     ];
 
@@ -145,18 +147,37 @@
       "$mod, right, movefocus, r"
       "$mod, up, movefocus, u"
       "$mod, down, movefocus, d"
+      # scroll through existing workspaces
+      "$mod, mouse_down, workspace, e+1"
+      "$mod, mouse_up, workspace, e-1"
     ] ++ (
-        # workspaces
-        # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
-        builtins.concatLists (builtins.genList (i:
-            let ws = i + 1;
-            in [
-              "$mod, code:1${toString i}, workspace, ${toString ws}"
-              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-            ]
-          )
-          9)
-      );
+      # workspaces
+      # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
+      builtins.concatLists (builtins.genList (i:
+          let ws = i + 1;
+          in [
+            "$mod, code:1${toString i}, workspace, ${toString ws}"
+            "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+          ]
+        )
+        9)
+    );
+
+    bindm = [
+      # Move/resize windows
+      "$mod, mouse:272, movewindow"
+      "$mod, mouse:273, resizewindow"
+    ];
+
+    bindel = [
+      # Laptop multimedia keys for volume and LCD brightness
+      ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+      ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      ",XF86MonBrightnessUp, exec, brightnessctl s 10%+"
+      ",XF86MonBrightnessDown, exec, brightnessctl s 10%-"
+    ];
 
     windowrulev2 = "suppressevent maximize, class:.*";
 
@@ -212,7 +233,7 @@
     enable = true;
     font = {
         name = "JetBrainsMono Nerd Font";
-        size = 10;
+        size = 11;
       };
       theme = "Catppuccin-Macchiato";
   };
@@ -222,18 +243,6 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -250,6 +259,28 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
   };
+  
+  home.file.".config/hypr/colors".text = ''
+    $background = rgba(1d192bee)
+    $foreground = rgba(c3dde7ee)
+
+    $color0 = rgba(1d192bee)
+    $color1 = rgba(465EA7ee)
+    $color2 = rgba(5A89B6ee)
+    $color3 = rgba(6296CAee)
+    $color4 = rgba(73B3D4ee)
+    $color5 = rgba(7BC7DDee)
+    $color6 = rgba(9CB4E3ee)
+    $color7 = rgba(c3dde7ee)
+    $color8 = rgba(889aa1ee)
+    $color9 = rgba(465EA7ee)
+    $color10 = rgba(5A89B6ee)
+    $color11 = rgba(6296CAee)
+    $color12 = rgba(73B3D4ee)
+    $color13 = rgba(7BC7DDee)
+    $color14 = rgba(9CB4E3ee)
+    $color15 = rgba(c3dde7ee)
+  '';
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

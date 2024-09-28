@@ -87,12 +87,18 @@
     vim
     git
     firefox
+    obsidian
     kitty
     rofi-wayland # app menu
     waybar # status bar
-    dunst # notifications?
+    mako # notifications?
     libnotify # dependency for dunst
     acpi # battery checker
+    brightnessctl # control brightness
+  ];
+
+  fonts.fonts = with pkgs; [
+    nerdfonts
   ];
 
   # Enable sound with pipewire.
@@ -102,7 +108,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    jack.enable = true;
+    #jack.enable = true;
   };
 
   programs.hyprland = {

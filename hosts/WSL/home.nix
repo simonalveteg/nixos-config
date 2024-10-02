@@ -8,8 +8,6 @@
     inputs.nvchad4nix.homeManagerModule
   ];
 
-  programs.bash.enable = true;
-
   programs.nvchad = {
     enable = true;
     extraConfig = 
@@ -32,12 +30,25 @@
           end
         end,
       })
+      -- map ctrl + backspace to delete word
+      vim.api.nvim_set_keymap('i', '<C-H>', '<C-W>', {noremap = true})
       '';
+  };
+
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+    if command -v fzf-share >/dev/null; then
+      source "$(fzf-share)/key-bindings.bash"
+      source "$(fzf-share)/completion.bash"
+    fi  
+    '';
   };
 
   programs.git = {
     enable = true;
     extraConfig = {
+      core.editor = "nvim";
       user = {
         email = "simon.alveteg@gmail.com";
         name = "simonalveteg";
@@ -57,6 +68,8 @@
   # environment.
   home.packages = with pkgs; [
     gdb
+    valgrind
+    fzf # fuzzy search in terminal
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

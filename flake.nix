@@ -15,7 +15,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ags.url = "github:aylur/ags/v2";
+    matugen.url = "github:InioX/Matugen";
     hyprland.url = "github:hyprwm/Hyprland";
+    stylix.url = "github:danth/stylix";
   };
 
   outputs = { self, nixpkgs, nixos-wsl, ... }@inputs: {
@@ -36,6 +39,7 @@
         modules = [
           ./hosts/C940/configuration.nix
           inputs.home-manager.nixosModules.default
+          inputs.stylix.nixosModules.stylix
         ];
       };
     };

@@ -38,7 +38,7 @@
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
-    backupFileExtension = "backup";
+    backupFileExtension = ".bak";
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {
@@ -78,6 +78,11 @@
     variant = "";
   };
 
+  stylix = {
+    enable = true;
+    image = ../../wallpapers/42615.jpg;
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -88,8 +93,12 @@
     git
     firefox
     obsidian
+    discord
     kitty
-    rofi-wayland # app menu
+
+    upower
+    # ---
+    #rofi-wayland # app menu
     waybar # status bar
     mako # notifications?
     libnotify # dependency for dunst
@@ -97,10 +106,11 @@
     brightnessctl # control brightness
   ];
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     nerdfonts
   ];
 
+  services.upower.enable = true;
   # Enable sound with pipewire.
   security.rtkit.enable = true;
   services.pipewire = {

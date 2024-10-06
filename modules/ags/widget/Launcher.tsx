@@ -2,27 +2,20 @@ import { App, Variable, Astal, Gtk, Gdk } from "astal"
 import AstalApps from "gi://AstalApps"
 import Hyprland from "gi://AstalHyprland"
 
-const winheight = (ratio) => Gdk.Screen.get_default()?.get_height()! * ratio
-const winwidth = (ratio) => Gdk.Screen.get_default()?.get_width()! * ratio
+//const winheight = (ratio) => Gdk.Screen.get_default()?.get_height()! * ratio
+//const winwidth = (ratio) => Gdk.Screen.get_default()?.get_width()! * ratio
 
 
-const Apps = new AstalApps.Apps({
+const apps = new AstalApps.Apps({
 	include_entry: true,
 	include_executable: true,
 	include_description: true,
 });
 
-const Applications = Apps.get_list();
+const filteredApps = Variable(apps.get_list())
 
-const sortedApplications = Applications.sort((a, b) => {
-	return a.get_name().localeCompare(b.get_name());
-});
-
-function createAppList(appList) {
-  return appList.sort((a, b) => {
-		return a.get_name().localeCompare(b.get_name());
-	}).map(app => (
-      <button
+function AppCard({app, child, children}: Props){
+  return <button
         className="launcher-app"
         name={app.get_name()}
         tooltip_text={app.get_description()}
@@ -32,14 +25,13 @@ function createAppList(appList) {
         }}
       >
         <box vertical={false} halign={Gtk.Align.FILL} valign={Gtk.Align.FILL} spacing={5}>
-          <icon icon={app.icon_name} halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER} />
+          <icon icon={app.icon_name || ""} halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER} />
           <label label={app.name} halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER} lines={1} wrap={false} xalign={0} yalign={0} />
         </box>
       </button>
-  ))
 }
 
-function createScrollablePage(appList) {
+function createScrollablePage() {
 	return (
 		<scrollable
 			className="launcher-apps"
@@ -51,10 +43,39 @@ function createScrollablePage(appList) {
 			valign={Gtk.Align.FILL}
 		>
 			<box halign={Gtk.Align.FILL} valign={Gtk.Align.FILL} hexpand={false} vexpand={true} vertical={true}>
-				{createAppList(appList)}
+          {filteredApps(apps => apps.map(app => (
+            <AppCard app={app} />
+          )))}
 			</box>
 		</scrollable>
 	);
+}
+
+function Search(query) {
+  filteredApps.set(apps.fuzzy_query(query))
+}
+
+const SearchInput = () => {
+  let query = ""
+
+  return (
+    <entry
+      className="launcher-search-input"
+      placeholder_text="Search"
+      on_changed={(entry) => {
+				query = entry.get_text();
+				Search(query);
+			}}
+			on_activate={() => {
+				Search(query);
+			}}
+    />
+  )
+}
+
+function resetState() {
+  App.toggle_window("launcher");
+  Search("");
 }
 
 
@@ -78,17 +99,22 @@ export default function Launcher(monitor: number) {
         valign={Gtk.Align.FILL}
         onKeyPressEvent={(_, event) => {
           if (event.get_keyval()[1] === Gdk.KEY_Escape) {
-            App.toggle_window("launcher");
+            resetState()
           }
 			  }}
 			>
         <box
           vertical={true}
-          hexpand={false}
-          vexpand={true}
-          spacing={10}
         >
-        { createScrollablePage(sortedApplications) }
+          <SearchInput />
+          <box
+            vertical={true}
+            hexpand={false}
+            vexpand={true}
+            spacing={10}
+          >
+            {createScrollablePage()}
+          </box>
         </box>
 			</eventbox>
 		</window>

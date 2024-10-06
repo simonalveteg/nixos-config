@@ -52,7 +52,7 @@
 
   home.packages = with pkgs; [
     fzf # fuzzy search 
-    wl-clipboard # clipboard?
+    wl-clipboard # clipboard
   ];
 
   home.file = { };

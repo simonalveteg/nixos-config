@@ -13,7 +13,7 @@
 
             background = [
                 {
-                    path = "~/nixos/wallpapers/42617.jpg";
+                    path = "~/nixos/wallpapers/42625.jpg";
                     blur_passes = 1;
                     contrast = 1;
                     brightness = 0.5;
@@ -35,12 +35,12 @@
 
                     fade_on_empty = false;
 
-                    inner_color = "rgba(0, 0, 0, 0.2)";
-                    outer_color = "rgba(0, 0, 0, 0)";
-                    font_color = "rgba(255, 255, 255, 1)";
-                    capslock_color = "rgba(0, 0, 170, 0.5)";
+                    inner_color = "rgb(${config.stylix.base16Scheme.base00})";
+                    outer_color = "rgba(0,0,0,0)";
+                    font_color = "rgb(${config.stylix.base16Scheme.base04})";
+                    capslock_color = "rgb(${config.stylix.base16Scheme.base08})";
 
-                    placeholder_text = ''<i><span foreground="##cdd674">Input Password</span></i>'';
+                    placeholder_text = ''<i><span foreground="##${config.stylix.base16Scheme.base02}">Input Password</span></i>'';
                     position = "0, -200";
                     halign = "center";
                     valign = "center";
@@ -49,7 +49,8 @@
 
             label = [
                 {
-                    text = ''cmd[update:1000] echo "<span>$(date '+%A,%d %B')</span>"'';
+                    text = ''cmd[update:1000] echo "<span>$(date '+%A, %d %B')</span>"'';
+                    text_align = "center";
                     color = "rgba(242, 243, 244, 0.75)";
                     
                     font_size = 32;
@@ -61,6 +62,7 @@
                 }
                 {
                     text = ''cmd[update:1000] echo "<span>$(date '+%I:%M %p ')</span>"'';
+                    text_align = "center";
                     color = "rgba(242, 243, 244, 0.75)";
                     font_size = 95;
                     font_family = "JetBrains Mono Extrabold";

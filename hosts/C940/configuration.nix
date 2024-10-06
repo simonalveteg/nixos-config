@@ -80,7 +80,8 @@
 
   stylix = {
     enable = true;
-    image = ../../wallpapers/42615.jpg;
+    polarity = "dark";
+    image = ../../wallpapers/42625.jpg;
   };
 
   # Allow unfree packages

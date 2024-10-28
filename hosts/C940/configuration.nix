@@ -12,6 +12,8 @@
       ../../modules/gnome
     ];
 
+  # Turn off hibernation, causing issues where gnome is unresponsive?
+  systemd.targets.hibernate.enable = false;
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -25,12 +27,6 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-
-  nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-  }; 
 
   users.users.skarv = {
     isNormalUser = true;
@@ -127,11 +123,6 @@
   };
   hardware.bluetooth.enable = true;
   services.blueman.enable = true; # bluetoothctl
-
-  programs.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages."${pkgs.system}".hyprland;
-  };
 
   system.stateVersion = "24.05"; # Did you read the comment?
 

@@ -15,9 +15,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ags.url = "github:aylur/ags/v2";
-    matugen.url = "github:InioX/Matugen";
-    hyprland.url = "github:hyprwm/Hyprland";
     stylix.url = "github:danth/stylix";
   };
 

@@ -7,12 +7,7 @@
 
   imports = [
     inputs.nvchad4nix.homeManagerModule
-    inputs.ags.homeManagerModules.default
-    inputs.matugen.nixosModules.default
     ../../modules/nvchad
-    # ../../modules/gnome
-    #../../modules/hyprland
-    #../../modules/waybar/default.nix
   ];
 
   programs.bash = {

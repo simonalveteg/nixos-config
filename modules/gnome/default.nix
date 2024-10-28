@@ -22,6 +22,9 @@
     geary # email reader
     evince # document viewer
     gedit # text editor
+    # gnome-contacts
+    # gnome-maps
+    # gnome-music
   ];
 
   hardware.sensor.iio.enable = true; # automatic screen rotation
@@ -36,7 +39,7 @@
     open-bar
     space-bar
     logo-menu
-    coverflow-alt-tab
+    # coverflow-alt-tab
   ];
   
   services = {

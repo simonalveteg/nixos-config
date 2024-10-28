@@ -27,16 +27,12 @@
         "caffeine@patapon.info"
         "logomenu@aryan_k"
         "quick-settings-tweaks@qwreey"
-        "rounded-window-corners@fxgn"
       ];
     };
     # Can't figure out why this doesn't work.
     # "org/gnome/shell/extensions/blur-my-shell" = {
     #   pipelines = ''{'pipeline_default': {'name': <'Default'>, 'effects': <[<{'type': <'color'>, 'id': <'effect_39989179920848'>, 'params': <{'color': <(0.12852799892425537, 0.28999999165534973, 0.065733335912227631, 0.46666666865348816)>}>}>, <{'type': <'native_static_gaussian_blur'>, 'id': <'effect_000000000000'>, 'params': <{'radius': <30>, 'brightness': <0.59999999999999998>}>}>]>}, 'pipeline_default_rounded': {'name': <'Default rounded'>, 'effects': <[<{'type': <'native_static_gaussian_blur'>, 'id': <'effect_000000000001'>, 'params': <{'radius': <30>, 'brightness': <0.59999999999999998>}>}>, <{'type': <'corner'>, 'id': <'effect_000000000002'>, 'params': <{'radius': <24>}>}>]>}}'';
     # };
-    "org/gnome/shell/extensions/rounded-window-corners-reborn" = {
-      tweak-kitty-terminal = true;
-    };
     "org/gnome/shell/extensions/logo-menu" = {
       symbolic-icon = true;
       menu-button-icon-image = 23; # nixos logo

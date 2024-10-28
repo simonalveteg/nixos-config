@@ -11,9 +11,7 @@
       ./hardware-configuration.nix
       ../../modules/gnome
     ];
-
-  # Turn off hibernation, causing issues where gnome is unresponsive?
-  systemd.targets.hibernate.enable = false;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

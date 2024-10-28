@@ -8,7 +8,8 @@
   imports =
     [
       inputs.home-manager.nixosModules.default
-     ./hardware-configuration.nix
+      ./hardware-configuration.nix
+      ../../modules/gnome
     ];
 
   # Bootloader.
@@ -98,11 +99,6 @@
     kitty
 
     upower
-    # ---
-    #rofi-wayland # app menu
-    waybar # status bar
-    mako # notifications?
-    libnotify # dependency for dunst
     acpi # battery checker
     brightnessctl # control brightness
   ];
@@ -120,7 +116,17 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     #jack.enable = true;
+    wireplumber.extraConfig.bluetoothEnhancements = {
+      "monitor.bluez.properties" = {
+        "bluez5.enable-sbc-xq" = true;
+        "bluez5.enable-msbc" = true;
+        "bluez5.enable-hw-volume" = true;
+        "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+      };
+    };
   };
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true; # bluetoothctl
 
   programs.hyprland = {
     enable = true;

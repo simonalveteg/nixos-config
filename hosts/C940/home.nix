@@ -9,8 +9,9 @@
     inputs.nvchad4nix.homeManagerModule
     inputs.ags.homeManagerModules.default
     inputs.matugen.nixosModules.default
-    ../../modules/hyprland
-    ../../modules/nvchad/default.nix
+    ../../modules/nvchad
+    # ../../modules/gnome
+    #../../modules/hyprland
     #../../modules/waybar/default.nix
   ];
 
@@ -28,6 +29,7 @@
   programs.git = {
     enable = true;
     extraConfig = {
+      core.editor = "nvim";
       user = {
         email = "simon.alveteg@gmail.com";
         name = "simonalveteg";
@@ -53,6 +55,12 @@
   home.packages = with pkgs; [
     fzf # fuzzy search 
     wl-clipboard # clipboard
+    proton-pass
+    # coding
+    oprofile
+    gdb
+    valgrind
+    gnumake
   ];
 
   home.file = { };

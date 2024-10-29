@@ -6,33 +6,15 @@
 
   imports = [
     inputs.nvchad4nix.homeManagerModule
+    ../../modules/nvchad
+    ../../modules/dev
   ];
 
-  programs.nvchad = {
+  dev = {
     enable = true;
-    extraConfig = 
-      ''
-      -- fix borders
-      local modified = false
-      vim.api.nvim_create_autocmd({'UIEnter', 'ColorScheme'}, {
-        callback = function()
-          local normal = vim.api.nvim_get_hl(0, { name = 'Normal' })
-          if normal.bg then
-              io.write(string.format('\027]11;#%06x\027\\', normal.bg))
-              modified = true
-          end
-        end,
-      })
-      vim.api.nvim_create_autocmd('UILeave', {
-        callback = function()
-          if modified then
-              io.write('\027]111\027\\')
-          end
-        end,
-      })
-      -- map ctrl + backspace to delete word
-      vim.api.nvim_set_keymap('i', '<C-H>', '<C-W>', {noremap = true})
-      '';
+    environments = {
+      c.enable = true;
+    };
   };
 
   programs.bash = {
@@ -44,31 +26,11 @@
     fi  
     '';
   };
-
-  programs.git = {
-    enable = true;
-    extraConfig = {
-      core.editor = "nvim";
-      user = {
-        email = "simon.alveteg@gmail.com";
-        name = "simonalveteg";
-      };
-      init = {defaultBranch = "main";};
-    };
-    aliases = {
-      cam = "commit -a -m";
-      clo = "config --list --show-origin";
-      l = "log --oneline -n10";
-    };
-  };
-
   home.stateVersion = "24.05"; 
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    gdb
-    valgrind
     fzf # fuzzy search in terminal
   ];
 

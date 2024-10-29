@@ -8,6 +8,7 @@
   imports = [
     inputs.nvchad4nix.homeManagerModule
     ../../modules/nvchad
+    ../../modules/dev
   ];
 
   # Run dconf watch / to observe changes.
@@ -43,6 +44,12 @@
     };
   };
 
+  dev = {
+    enable = true;
+    environments = {
+      c.enable = true;
+    };
+  };
 
   programs.bash = {
     enable = true;
@@ -54,42 +61,14 @@
     '';
   };
 
-
-  programs.git = {
-    enable = true;
-    extraConfig = {
-      core.editor = "nvim";
-      user = {
-        email = "simon.alveteg@gmail.com";
-        name = "simonalveteg";
-      };
-      init = {defaultBranch = "main";};
-    };
-    aliases = {
-      cam = "commit -a -m";
-      clo = "config --list --show-origin";
-      l = "log --oneline -n10";
-    };
-  };
-
   programs.kitty = {
     enable = true;
-   # font = {
-   #     name = "JetBrainsMono Nerd Font";
-   #     size = 11;
-   #   };
-   #   theme = "Catppuccin-Macchiato";
   };
 
   home.packages = with pkgs; [
     fzf # fuzzy search 
     wl-clipboard # clipboard
     proton-pass
-    # coding
-    oprofile
-    gdb
-    valgrind
-    gnumake
   ];
 
   home.file = { };

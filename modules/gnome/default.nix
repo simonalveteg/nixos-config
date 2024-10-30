@@ -25,10 +25,11 @@
     quick-settings-tweaker
     rounded-window-corners-reborn
     clipboard-indicator
-    tiling-shell
+    # tiling-shell
     caffeine
     logo-menu
     launch-new-instance
+    forge
   ];
   
   services = {

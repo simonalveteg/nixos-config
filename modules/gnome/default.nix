@@ -12,9 +12,9 @@
     geary # email reader
     evince # document viewer
     gedit # text editor
-    # gnome-contacts
-    # gnome-maps
-    # gnome-music
+    gnome-contacts
+    gnome-maps
+    gnome-music
   ];
 
   hardware.sensor.iio.enable = true; # automatic screen rotation
@@ -24,13 +24,11 @@
     pop-shell
     quick-settings-tweaker
     rounded-window-corners-reborn
-    # top-bar-organizer
-    # just-perfection
+    clipboard-indicator
+    tiling-shell
     caffeine
-    # open-bar
-    # space-bar
     logo-menu
-    # coverflow-alt-tab
+    launch-new-instance
   ];
   
   services = {

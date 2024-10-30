@@ -41,7 +41,7 @@
     };
   };
 
-  home-manager.users.skarv = { pkgs, ... }: with lib.gvariant; {
+  home-manager.users.skarv = { pkgs, ... }: {
     # Run dconf watch / to observe changes.
     dconf.settings = {
       "org/gnome/desktop/interface" = {
@@ -70,7 +70,7 @@
 
       "org/gnome/desktop/wm/preferences".num-workspaces = 6; # minimum number of workspaces.
 
-      "org/gnome/shell/extensions/blur-my-shell" = {
+      "org/gnome/shell/extensions/blur-my-shell" = with lib.gvariant;  {
         pipelines = [
           (mkDictionaryEntry "pipeline_default" ([
             (mkDictionaryEntry "name" (mkVariant "Default"))

@@ -21,15 +21,6 @@
   outputs = { self, nixpkgs, nixos-wsl, ... }@inputs: {
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
     nixosConfigurations = {
-      wsl = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        system = "x86_64-linux";        
-        modules = [
-          ./hosts/WSL/configuration.nix
-          inputs.home-manager.nixosModules.default
-	        nixos-wsl.nixosModules.wsl
-        ];
-      };
       c940 = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         system = "x86_64-linux";
@@ -37,6 +28,23 @@
           ./hosts/C940/configuration.nix
           inputs.home-manager.nixosModules.default
           inputs.stylix.nixosModules.stylix
+        ];
+      };
+      dagobert = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs;};
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/dagobert/configuration.nix
+          inputs.home-manager.nixosModules.default
+        ];
+      };
+      wsl = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs;};
+        system = "x86_64-linux";        
+        modules = [
+          ./hosts/WSL/configuration.nix
+          inputs.home-manager.nixosModules.default
+	        nixos-wsl.nixosModules.wsl
         ];
       };
     };

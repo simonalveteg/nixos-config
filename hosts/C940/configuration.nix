@@ -11,6 +11,7 @@
       ./hardware-configuration.nix
       ../../modules/gnome
     ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -82,19 +83,8 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
-    git
-    firefox
-    obsidian
-    discord
-    kitty
-
-    upower
-    acpi # battery checker
-    brightnessctl # control brightness
   ];
 
   fonts.packages = with pkgs; [

@@ -36,6 +36,10 @@
     fzf # fuzzy search 
     wl-clipboard # clipboard
     proton-pass
+    firefox
+    obsidian
+    discord
+    kitty
   ];
 
   home.file = { };

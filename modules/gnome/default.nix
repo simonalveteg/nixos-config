@@ -130,6 +130,7 @@
 
       "org/gnome/shell/extensions/forge" = {
         quick-settings-enabled = false;
+        focus-border-toggle = false;
       };
 
       "org/gnome/desktop/wm/keybindings" = {

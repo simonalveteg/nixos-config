@@ -15,7 +15,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sops-nix.url = "github:Mic92/sops-nix";
+
     stylix.url = "github:danth/stylix";
+    vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
   };
 
   outputs = { self, nixpkgs, nixos-wsl, ... }@inputs: {
@@ -28,6 +31,8 @@
           ./hosts/C940/configuration.nix
           inputs.home-manager.nixosModules.default
           inputs.stylix.nixosModules.stylix
+          inputs.vpn-confinement.nixosModules.default
+          inputs.sops-nix.nixosModules.sops
         ];
       };
       dagobert = nixpkgs.lib.nixosSystem {

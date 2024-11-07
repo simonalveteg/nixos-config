@@ -1,0 +1,7 @@
+keys:
+  - &C940_skarv age1qg3z6vfzlku8n6c9euueugj4kh223ruyphfvhpp3k6jg7e3v5uusttdktm
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini|conf)$
+    key_groups:
+    - age:
+        - *C940_skarv

@@ -2,30 +2,47 @@
 
 {
   imports = [
-    inputs.home-manager.nixosModules.default 
-    # TODO: Import hardware configuration.
+    ./hardware-configuration.nix
+    ../../modules/server
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  networking.networkmanager.enable = true;
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
+  boot.loader.grub.enable = false;
+  # Enables the generation of /boot/extlinux/extlinux.conf
+  boot.loader.generic-extlinux-compatible.enable = true;
 
-  networking.hostName = "dagobert"; # Define your hostname.
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.defaultSopsFile = ../../secrets/secrets.yaml;
+  sops.secrets.pass = {};
 
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    users = {
-      "skarv" = import ./home.nix;
-    };
+  networking = {
+    hostName = "dagobert";
+    networkmanager.enable = true;
   };
 
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
+
+  # the user account on the machine
+  users.users.admin = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    hashedPassword = "$6$wC0PJhkoBmLJAqsM$R7zFvUuK7rnHhZw8XQd6PXW41q7wv2ftw3k3sEh97sBdZD6vFJxTYRJKMUn5Hnn.jMhYQa8kuGSCPM6e7HFvu/";
+  };
+
+  # this allows you to run `nixos-rebuild --target-host admin@this-machine` from a different host.
+  nix.settings.trusted-users = [ "admin" ];
+
   environment.systemPackages = with pkgs; [
-    vim
+    neovim
+    git
   ];
 
+  environment.variables = {
+    EDITOR = "neovim";
+  };
   
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";

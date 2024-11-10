@@ -2,8 +2,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  sops.age.sshKeyPaths = [ "/home/skarv/.ssh/id_ed25519" ];
-  sops.defaultSopsFile = ../../secrets/secrets.yaml;
   sops.secrets.wireguard = { 
     owner = "root"; 
     sopsFile = ./mullvad.yaml;
@@ -16,7 +14,7 @@
     enable = true;
     wireguardConfigFile = config.sops.secrets.wireguard.path;
     accessibleFrom = [
-      "192.168.1.0/24"
+      "192.168.0.0/16"
       "10.0.0.0/8"
       "127.0.0.1/32"
     ];
@@ -41,7 +39,7 @@
       group = "media";
       openPeerPorts = true;
       settings = {
-        download-dir = "/mnt/jellyfin/torrents";
+        download-dir = "/media/hdd/jellyfin/torrents";
         rpc-bind-address = "0.0.0.0"; # Bind RPC/WebUI to bridge address. Doesn't work??
         rpc-whitelist-enabled = false;
         rpc-port = 9091;
@@ -51,25 +49,31 @@
     };
     jellyfin = {
       enable = true; # 8096
+      openFirewall = true;
       group = "media";
     };
     jellyseerr = {
       enable = true; # 5055
+      openFirewall = true;
     };
     prowlarr = {
       enable = true; # 9696
+      openFirewall = true;
     };
     sonarr = {
       enable = true; # 8989
       group = "media";
+      openFirewall = true;
     };
     radarr = {
       enable = true; #7878
       group = "media";
+      openFirewall = true;
     };
     bazarr = {
       enable = true; #6767
       group = "media";
+      openFirewall = true;
     };
   };
 }

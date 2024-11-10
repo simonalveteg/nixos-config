@@ -31,16 +31,15 @@
           ./hosts/C940/configuration.nix
           inputs.home-manager.nixosModules.default
           inputs.stylix.nixosModules.stylix
-          inputs.vpn-confinement.nixosModules.default
-          inputs.sops-nix.nixosModules.sops
         ];
       };
       dagobert = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
-        system = "x86_64-linux";
+        system = "aarch64-linux";
         modules = [
           ./hosts/dagobert/configuration.nix
-          inputs.home-manager.nixosModules.default
+          inputs.vpn-confinement.nixosModules.default
+          inputs.sops-nix.nixosModules.sops
         ];
       };
       wsl = nixpkgs.lib.nixosSystem {

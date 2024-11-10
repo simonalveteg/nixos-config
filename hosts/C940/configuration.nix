@@ -12,6 +12,8 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # Enable binfmt emulation of aarch64-linux, needed to cross-compile the SD image for raspberry pi.
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

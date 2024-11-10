@@ -1,7 +1,14 @@
 keys:
   - &C940_skarv age1qg3z6vfzlku8n6c9euueugj4kh223ruyphfvhpp3k6jg7e3v5uusttdktm
+  - &dagobert age1h5m8nelc0cjtklhlqc6x94ldukzhh226428lqhtw3nvl57t8jvmqeehkzc
 creation_rules:
-  - path_regex: secrets/[^/]+\.(yaml|json|env|ini|conf)$
+  - path_regex: modules/server/mullvad.yaml$
     key_groups:
     - age:
+        - *dagobert
+        - *C940_skarv
+  - path_regex: secrets/secrets.yaml$
+    key_groups:
+    - age:
+        - *dagobert
         - *C940_skarv

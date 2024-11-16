@@ -13,38 +13,52 @@
   vpnNamespaces.mullvad = {
     enable = true;
     wireguardConfigFile = config.sops.secrets.wireguard.path;
+    # The address at which the confined services will be accessible.
+    namespaceAddress = "192.168.15.1"; 
     accessibleFrom = [
       "192.168.0.0/16"
       "10.0.0.0/8"
       "127.0.0.1/32"
     ];
     portMappings = [
-      { from = 9091; to = 9091; } # UI Port.
+      { from = 8112; to = 8112; } # UI Port.
     ];
     openVPNPorts = [{
-      port = 51413; # Peer port. Mullvad doesn't support port forwarding so this won't have an effect?
+      port = 58846; # Peer port. 
       protocol = "both";
     }];
   };
   
-  systemd.services.transmission.vpnConfinement = {
+  systemd.services.deluged.vpnConfinement = {
+    enable = true;
+    vpnNamespace = "mullvad";
+  };
+  # Required so that the web ui can find the daemon
+  systemd.services.delugeweb.vpnConfinement = {
     enable = true;
     vpnNamespace = "mullvad";
   };
 
   services = {
-    mullvad-vpn.enable = true;
-    transmission = {
+    deluge = {
       enable = true;
       group = "media";
-      openPeerPorts = true;
-      settings = {
-        download-dir = "/media/hdd/jellyfin/torrents";
-        rpc-bind-address = "0.0.0.0"; # Bind RPC/WebUI to bridge address. Doesn't work??
-        rpc-whitelist-enabled = false;
-        rpc-port = 9091;
-        peer-port = 51413;
-        utp-enabled = false;
+      declarative = true;
+      web = {
+      	enable = true;
+        openFirewall = true;
+      };
+      openFirewall = true;
+      config = {
+        download_location = "/media/hdd/jellyfin/torrents";
+        enabled_plugins = [
+            "Label"
+            "WebUi"
+        ];
+      };
+      authFile = pkgs.writeTextFile {
+        name = "deluge-auth";
+      	text = "localclient:deluge:10\n";
       };
     };
     jellyfin = {
